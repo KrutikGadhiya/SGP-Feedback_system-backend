@@ -17,7 +17,7 @@ const options = {
     },
     servers: [
       { url: 'http://localhost:5000/' },
-      { url: 'https://sgp-feedback-system/' }
+      { url: 'https://sgp-feedback-system.herokuapp.com/' }
     ]
   },
   apis: ['./index.js', './routes/login.js']
