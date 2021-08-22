@@ -1,6 +1,7 @@
 const express = require('express')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const sendMail = require('../connection/sendMail')
 const router = express.Router()
 const UserModel = require('../models/users')
 
@@ -54,7 +55,9 @@ router.post('/signUp', (req, res) => {
 
             newUser.save()
               .then(savedUser => {
-                res.json({ message: "User Saved Successfully" })
+                res.json({ message: "Signed-Up Successfully, Please Verify your Email to continue" })
+                // console.log(savedUser)
+                sendMail(savedUser.email, `http://localhost:5000/verify/${savedUser._id}`)
               })
               .catch(err => {
                 console.log(err)
@@ -102,7 +105,7 @@ router.post('/login', (req, res) => {
   UserModel.findOne({ email: email })
     .then(savedUser => {
       if (!savedUser) {
-        return res.status(422).json({ message: "Invalid Email or Password!!" })
+        return res.status(422).json({ message: "IT seems like You dont have an account, Sign-Up to continue" })
       }
       bcrypt.compare(password, savedUser.password)
         .then(doMatch => {
@@ -126,4 +129,14 @@ router.post('/login', (req, res) => {
     })
 })
 
+router.get('/verify/:id', (req, res) => {
+  id = req.params.id
+  UserModel.findById(id)
+    .then(result => {
+      res.status(200).json({ message: "User Verified Successfully, You can now continue further" })
+    })
+    .catch(err => {
+      res.json(500).json({ message: "Error Processing your Request, Please try again after some time" })
+    })
+})
 module.exports = router
