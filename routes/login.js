@@ -116,7 +116,7 @@ router.post('/login', (req, res) => {
       if (!savedUser) {
         return res.status(404).json({ message: "IT seems like You dont have an account, Sign-Up to continue" })
       }
-      if (!user.isVerified) {
+      if (!savedUser.isVerified) {
         return res.status(401).json({ message: "User Not Verified" })
       }
       bcrypt.compare(password, savedUser.password)
@@ -132,12 +132,12 @@ router.post('/login', (req, res) => {
         })
         .catch(err => {
           console.log(err)
-          return res.status(500).json({ message: "Some Error Occured" })
+          return res.status(500).json({ message: "ASome Error Occured" })
         })
     })
     .catch(err => {
       console.log(err)
-      return res.status(500).json({ message: "Some Error Occured" })
+      return res.status(500).json({ message: "BSome Error Occured" })
     })
 })
 
@@ -205,10 +205,12 @@ router.post('/verify', (req, res) => {
           UserModel.updateOne({ _id: user._id }, { isVerified: true })
             .then(updated => {
               // console.log(updated)
-              res.send(success())
+              // res.send(success())
+              res.status(200).json({ message: "Verified Successfully" })
             })
             .catch(err => {
-              res.send(error())
+              // res.send(error())
+              res.status(400).json({ message: "User not found" })
             })
         } else {
           res.status(401).json({ message: "Wrong Otp" })
