@@ -26,7 +26,7 @@ const options = {
 // middlewares
 app.use(express.json())
 app.use(cors())
-app.use(require('./routes/login'))
+app.use('/api', require('./routes/login'))
 const swaggerSpec = swaggerJSDoc(options)
 app.use('/apis', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 

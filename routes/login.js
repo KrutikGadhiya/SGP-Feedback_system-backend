@@ -9,7 +9,7 @@ const UserModel = require('../models/users')
 
 /**
  * @swagger
- * /signUp:
+ * /api/signUp:
  *  post:
  *      summary: User SignUP
  *      description: API for User SignUp, this API takes 4 properties userName, password, email, role
@@ -78,7 +78,7 @@ router.post('/signUp', (req, res) => {
 
 /**
  * @swagger
- * /login:
+ * /api/login:
  *  post:
  *      summary: User Login
  *      description: API for User Login successfull login will response in json object having the token and few user details
@@ -144,7 +144,7 @@ router.post('/login', (req, res) => {
 
 /**
  * @swagger
- * /verify:
+ * /api/verify:
  *  post:
  *      summary: User Verification
  *      description: API for User Verification and re-sending verification code to their Email. For re-sending verification code value of reSend = true and to verify code reSend = false
