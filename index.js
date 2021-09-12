@@ -20,13 +20,15 @@ const options = {
       { url: 'https://sgp-feedback-system.herokuapp.com/' }
     ]
   },
-  apis: ['./index.js', './routes/login.js']
+  apis: ['./index.js', './routes/login.js', './routes/feedbackQue.js', './routes/newFeedback.js']
 }
 
 // middlewares
 app.use(express.json())
 app.use(cors())
 app.use('/api', require('./routes/login'))
+app.use('/api', require('./routes/feedbackQue'))
+app.use('/api', require('./routes/newFeedback'))
 const swaggerSpec = swaggerJSDoc(options)
 app.use('/apis', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 

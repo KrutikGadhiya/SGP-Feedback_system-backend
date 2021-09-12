@@ -5,6 +5,14 @@ const newFeedbackSchema = mongoose.Schema({
   name: {
     type: String
   },
+  feedbackFor: {
+    type: []
+  },
+  feedbackQuestions: {
+    type: ObjectId,
+    ref: "FeedbackQuestions",
+    default: "613da2c057719d0f0055c8e0"
+  },
   createdBy: {
     type: ObjectId,
     ref: "User"
@@ -20,5 +28,5 @@ const newFeedbackSchema = mongoose.Schema({
   }
 }, { timestamps: true })
 
-const newFeedbackModal = mongoose.model('newFeedback', newFeedbackSchema)
+const newFeedbackModal = mongoose.model('NewFeedback', newFeedbackSchema)
 module.exports = newFeedbackModal
