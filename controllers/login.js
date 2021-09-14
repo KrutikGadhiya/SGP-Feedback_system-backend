@@ -14,6 +14,7 @@ const signup = (req, res) => {
         return res.status(422).json({ message: "User Already Exists with the same E-mail" })
       } else {
         const otp = Math.floor(100000 + Math.random() * 900000)
+        role = role.toLowerCase()
         bcrypt.hash(password, 12)
           .then(hashedPassword => {
             const newUser = new UserModel({

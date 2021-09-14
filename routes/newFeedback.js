@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { newfeed } = require('../controllers/newFeedback')
+const { newfeed, getFeedbackList } = require('../controllers/newFeedback')
 
 
 /**
@@ -43,4 +43,17 @@ const { newfeed } = require('../controllers/newFeedback')
  */
 router.post('/newFeedback', newfeed)
 
+/**
+ * @swagger
+ * /api/getfeedbacklist:
+ *  get:
+ *      summary: get the feedback list
+ *      description: API getting feedback list, all the feedback
+ *      responses:
+ *          200:
+ *              description: gives all the feedback
+ *          204:
+ *              description: no feedback found
+ */
+router.get('/getfeedbacklist', getFeedbackList)
 module.exports = router

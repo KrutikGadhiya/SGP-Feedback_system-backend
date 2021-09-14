@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { feedbackQue } = require('../controllers/feedbackQue')
+const { feedbackQue, getFeedbackQue } = require('../controllers/feedbackQue')
 
 /**
  * @swagger
@@ -33,4 +33,17 @@ const { feedbackQue } = require('../controllers/feedbackQue')
  */
 router.post('/addfeedbackque', feedbackQue)
 
+/**
+ * @swagger
+ * /api/getfeedbackque:
+ *  get:
+ *      summary: get the feedback questions list
+ *      description: API getting feedback questions list, all the feedback questions that were created by the admin
+ *      responses:
+ *          200:
+ *              description: gives all the feedback question 
+ *          204:
+ *              description: no feedback found
+ */
+router.get('/getfeedbackque', getFeedbackQue)
 module.exports = router

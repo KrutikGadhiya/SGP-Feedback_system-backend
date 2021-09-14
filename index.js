@@ -20,6 +20,12 @@ const options = {
       { url: 'https://sgp-feedback-system.herokuapp.com/' }
     ]
   },
+  components: {
+    BearerAuth: {
+      type: 'http',
+      scheme: 'bearer'
+    }
+  },
   apis: ['./index.js', './routes/login.js', './routes/feedbackQue.js', './routes/newFeedback.js']
 }
 
@@ -50,6 +56,7 @@ app.get('/', (req, res) => {
 app.post('/test', requireLogin, (req, res) => {
   console.log(req.body)
   console.log(req.user)
+  res.json({ message: "Authorised" })
 })
 app.get('/test', (req, res) => {
   res.send(`<html>
