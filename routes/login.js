@@ -27,7 +27,7 @@ const { login, signup, verify } = require('../controllers/login')
  *          200:
  *              description: Signed-IN Successfully
  *          422:
- *              description: Invalid Email or Password
+ *              description: User Already Exists with the same E-mail
  *          500:
  *              description: Some error Occured
  */

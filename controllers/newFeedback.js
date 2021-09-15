@@ -28,7 +28,7 @@ const newfeed = async (req, res) => {
 }
 
 const getFeedbackList = async (req, res) => {
-  const feedbackList = await NewFeedback.find()
+  const feedbackList = await NewFeedback.find().populate("createdBy", ['userName', 'email']).populate("feedbackQuestions", 'name')
   if (!feedbackList.length) {
     return res.status(204) //.json({ message: "No record Found" })
   }
