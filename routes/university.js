@@ -42,4 +42,5 @@ const { addUniversity } = require('../controllers/university')
 
 router.post('/addUniversity', addUniversity)
 
+// TODO: get route
 module.exports = router
