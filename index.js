@@ -26,7 +26,7 @@ const options = {
       scheme: 'bearer'
     }
   },
-  apis: ['./index.js', './routes/login.js', './routes/feedbackQue.js', './routes/newFeedback.js']
+  apis: ['./index.js', './routes/login.js', './routes/feedbackQue.js', './routes/newFeedback.js', './routes/university.js']
 }
 
 // middlewares
@@ -35,6 +35,7 @@ app.use(cors())
 app.use('/api', require('./routes/login'))
 app.use('/api', require('./routes/feedbackQue'))
 app.use('/api', require('./routes/newFeedback'))
+app.use('/api', require('./routes/university'))
 const swaggerSpec = swaggerJSDoc(options)
 app.use('/apis', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 

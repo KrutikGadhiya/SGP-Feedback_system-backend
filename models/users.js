@@ -14,6 +14,15 @@ const UserSchema = mongoose.Schema({
     type: Boolean,
     default: false
   },
+  institute: {
+    type: String
+  },
+  department: {
+    type: String
+  },
+  // year: {
+  //   type: Number
+  // },
   role: {
     type: String
   },

@@ -4,8 +4,8 @@ const sendMail = require('../connection/sendMail')
 const UserModel = require('../models/users')
 
 const signup = (req, res) => {
-  const { userName, email, password, role } = req.body
-  if (!userName || !email || !password || !role) {
+  const { userName, email, password, role, institute, department } = req.body
+  if (!userName || !email || !password || !role || !institute || !department) {
     return res.status(422).json({ message: "Please add all the Fields!!" })
   }
   UserModel.findOne({ email: email })
@@ -21,14 +21,16 @@ const signup = (req, res) => {
               email,
               password: hashedPassword,
               role,
-              otp
+              otp,
+              institute,
+              department
             })
 
             newUser.save()
               .then(savedUser => {
                 // console.log(savedUser)
                 sendMail(savedUser.email, otp)
-                res.json({ message: "Signed-Up Successfully, Please Verify your Email to continue" })
+                res.status(200).json({ message: "Signed-Up Successfully, Please Verify your Email to continue" })
               })
               .catch(err => {
                 console.log(err)
@@ -61,8 +63,8 @@ const login = (req, res) => {
         .then(doMatch => {
           if (doMatch) {
             const token = jwt.sign({ id: savedUser._id }, process.env.JWT_SECRET, { expiresIn: '48h' })
-            const { _id, userName, email, role, isVerified } = savedUser
-            res.json({ token, _id, userName, email, role, isVerified })
+            const { _id, userName, email, role, isVerified, institute, department } = savedUser
+            res.status(200).json({ token, _id, userName, email, role, isVerified, institute, department })
           }
           else {
             return res.status(422).json({ message: "Invalid Email or Password!!" })

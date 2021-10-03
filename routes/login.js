@@ -23,6 +23,10 @@ const { login, signup, verify } = require('../controllers/login')
  *                                type: string
  *                          role:
  *                                type: string
+ *                          institute:
+ *                                type: string
+ *                          department:
+ *                                type: string
  *      responses:
  *          200:
  *              description: Signed-IN Successfully
