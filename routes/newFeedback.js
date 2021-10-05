@@ -53,7 +53,7 @@ router.post('/newFeedback', newfeed)
  *          200:
  *              description: gives all the feedback
  *          204:
- *              description: no feedback found
+ *              description: no feedback found, (nothing is returned in the response)
  */
 router.get('/getfeedbacklist', getFeedbackList)
 module.exports = router

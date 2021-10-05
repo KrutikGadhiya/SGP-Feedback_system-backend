@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { addUniversity } = require('../controllers/university')
+const { addUniversity, getUniversity } = require('../controllers/university')
 
 /**
  * @swagger
@@ -42,5 +42,30 @@ const { addUniversity } = require('../controllers/university')
 
 router.post('/addUniversity', addUniversity)
 
-// TODO: get route
+/**
+ * @swagger
+ * /api/getUniversity?{institute}&{department}:
+ *  get:
+ *      summary: get the institute/department/faculties details.
+ *      description: API faculty/students/course details after providing institute or department as paamater. NOTE- if nothing is provided, details of every department in every institute is returned.
+ *      parameters:
+ *         - in: query
+ *           name: institute
+ *           schema:
+ *             type: string
+ *           description: name of the Institute
+ *         - in: query
+ *           name: department
+ *           schema:
+ *             type: string
+ *           description: name of the Department
+ *      responses:
+ *          200:
+ *              description: all the details according to parameters.
+ *          204:
+ *              description: No entry Found, no department in institute exist. (nothing is returned in the response)
+ *          500:
+ *              description: Some Error Occured (server error).
+ */
+router.get('/getUniversity', getUniversity)
 module.exports = router

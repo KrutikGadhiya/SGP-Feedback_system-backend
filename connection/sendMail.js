@@ -1,10 +1,11 @@
 const nodeMailer = require('nodemailer')
+require('dotenv').config()
 
 const transporter = nodeMailer.createTransport({
-  service: 'hotmail',
+  service: process.env.EMAIL_SERVICE,
   auth: {
-    user: 'Sgp-feedback-system@outlook.com',
-    pass: 'Abc@123456789'
+    user: process.env.EMAIL,
+    pass: process.env.EMAIL_PASS
   }
 })
 
@@ -24,7 +25,7 @@ const sendMail = (to, otp) => {
       console.log(err)
       return
     }
-    console.log(info)
+    // console.log(info)
   })
 }
 
