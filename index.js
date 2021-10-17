@@ -36,6 +36,7 @@ app.use('/api', require('./routes/login'))
 app.use('/api', require('./routes/feedbackQue'))
 app.use('/api', require('./routes/newFeedback'))
 app.use('/api', require('./routes/university'))
+// app.use('/api', require('./routes/yearCourse'))
 const swaggerSpec = swaggerJSDoc(options)
 app.use('/apis', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 

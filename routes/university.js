@@ -4,7 +4,7 @@ const { addUniversity, getUniversity } = require('../controllers/university')
 
 /**
  * @swagger
- * /api/addUniversity:
+ * /api/uniDetails:
  *  post:
  *      summary: For adding university's institute details
  *      description: 
@@ -40,11 +40,11 @@ const { addUniversity, getUniversity } = require('../controllers/university')
  *              description: Some error Occured
  */
 
-router.post('/addUniversity', addUniversity)
+router.post('/uniDetails', addUniversity)
 
 /**
  * @swagger
- * /api/getUniversity?{institute}&{department}:
+ * /api/uniDetails?{institute}&{department}:
  *  get:
  *      summary: get the institute/department/faculties details.
  *      description: API faculty/students/course details after providing institute or department as paamater. NOTE- if nothing is provided, details of every department in every institute is returned.
@@ -67,5 +67,5 @@ router.post('/addUniversity', addUniversity)
  *          500:
  *              description: Some Error Occured (server error).
  */
-router.get('/getUniversity', getUniversity)
+router.get('/uniDetails', getUniversity)
 module.exports = router
