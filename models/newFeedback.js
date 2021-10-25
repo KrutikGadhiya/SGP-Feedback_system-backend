@@ -5,8 +5,14 @@ const newFeedbackSchema = mongoose.Schema({
   name: {
     type: String
   },
+  // feedbackFor: {
+  //   type: []
+  // },
   feedbackFor: {
-    type: []
+    type: {
+      sem: Number,
+      year: Number
+    }
   },
   feedbackQuestions: {
     type: ObjectId,

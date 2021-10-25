@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { login, signup, verify } = require('../controllers/login')
+const { login, signup, verify, getUser } = require('../controllers/login')
 
 /**
  * @swagger
@@ -102,5 +102,26 @@ router.post('/login', login)
  */
 router.post('/verify', verify)
 
+/**
+ * @swagger
+ * /api/user?{id}:
+ *  get:
+ *      summary: get the user details
+ *      description: API getting feedback list, all the feedback
+ *      parameters:
+ *         - in: query
+ *           name: id
+ *           schema:
+ *             type: string
+ *           description: id of the user (_id)
+ *      responses:
+ *          200:
+ *              description: gives all the feedback
+ *          404:
+ *              description: no user found
+ *          500:
+ *              Some error occured
+ */
+router.get('/user', getUser)
 
 module.exports = router

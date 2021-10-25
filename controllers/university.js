@@ -39,7 +39,7 @@ const addUniversity = async (req, res) => {
 }
 
 const getUniversity = async (req, res) => {
-  const { institute, department } = req.query
+  const { institute, department, sem, year } = req.query
   let uniList
   try {
     if (institute && department) { uniList = await universityModel.find({ institute: institute.toUpperCase(), department: department.toUpperCase() }).populate("courses") }
@@ -49,7 +49,10 @@ const getUniversity = async (req, res) => {
 
     if (!uniList.length) return res.status(204) //No content: .json({ message: "No entry Found" })
 
-    return res.json(uniList)
+    if (sem && year) return res.json(uniList.filter((detail) => detail.sem == sem && detail.year == year))
+    else if (sem && !year) return res.json(uniList.filter((detail) => detail.sem == sem))
+    else if (!sem && year) return res.json(uniList.filter((detail) => detail.year == year))
+    else if (!sem && !year) return res.json(uniList)
 
   } catch (err) {
     console.log(err)

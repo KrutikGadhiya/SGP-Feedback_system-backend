@@ -23,14 +23,14 @@ const { addUniversity, getUniversity } = require('../controllers/university')
  *                                type: array
  *                                items:
  *                                  type: string
- *                          students:
- *                                type: array
- *                                items:
- *                                  type: string
+ *                          sem:
+ *                                type: number
  *                          courses:
  *                                type: array
  *                                items:
  *                                  type: string
+ *                          year:
+ *                                type: number
  *      responses:
  *          200:
  *              description: Added Successfully
@@ -44,7 +44,7 @@ router.post('/uniDetails', addUniversity)
 
 /**
  * @swagger
- * /api/uniDetails?{institute}&{department}:
+ * /api/uniDetails?{institute}&{department}&{sem}&{year}:
  *  get:
  *      summary: get the institute/department/faculties details.
  *      description: API faculty/students/course details after providing institute or department as paamater. NOTE- if nothing is provided, details of every department in every institute is returned.
@@ -59,6 +59,16 @@ router.post('/uniDetails', addUniversity)
  *           schema:
  *             type: string
  *           description: name of the Department
+ *         - in: query
+ *           name: sem
+ *           schema:
+ *             type: number
+ *           description: semister
+ *         - in: query
+ *           name: year
+ *           schema:
+ *             type: number
+ *           description: year
  *      responses:
  *          200:
  *              description: all the details according to parameters.

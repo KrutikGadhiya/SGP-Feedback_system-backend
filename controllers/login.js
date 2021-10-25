@@ -130,4 +130,27 @@ const verify = (req, res) => {
   }
 }
 
-module.exports = { login, signup, verify }
+const getUser = async (req, res) => {
+  const { id } = req.query
+  try {
+    const savedUser = await UserModel.findById(id)
+    if (!savedUser) return res.status(404).json({ message: "User does not exist" })
+    console.log(savedUser)
+    return res.json({
+      isVerified: savedUser.isVerified,
+      _id: savedUser._id,
+      userName: savedUser.userName,
+      email: savedUser.email,
+      role: savedUser.role,
+      createdAt: savedUser.createdAt,
+      updatedAt: savedUser.updatedAt,
+      department: savedUser.department,
+      institute: savedUser.institute
+    })
+  } catch (err) {
+    console.log(err)
+    return res.status(500).json({ message: "Some Error Occured" })
+  }
+}
+
+module.exports = { login, signup, verify, getUser }
