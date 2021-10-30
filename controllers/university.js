@@ -1,4 +1,5 @@
 const universityModel = require('../models/university')
+const userModel = require('../models/users')
 const { addYearCourse } = require('./yearCourse')
 
 const addUniversity = async (req, res) => {
@@ -60,4 +61,15 @@ const getUniversity = async (req, res) => {
   }
 }
 
-module.exports = { addUniversity, getUniversity }
+const getFacultyList = async (req, res) => {
+  try {
+    const facultyList = await userModel.find({ role: 'faculty' })
+    if (!facultyList.length) return res.status(204) // no content no faculty found
+    res.json(facultyList.map((faclty) => ({ id: faclty._id, userName: faclty.userName, email: faclty.email, institute: faclty.institute, department: faclty.department })))
+  } catch (err) {
+    console.log(err)
+    return res.status(500).json({ message: "Some error occured" })
+  }
+}
+
+module.exports = { addUniversity, getUniversity, getFacultyList }

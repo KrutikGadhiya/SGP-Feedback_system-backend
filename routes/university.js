@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { addUniversity, getUniversity } = require('../controllers/university')
+const { addUniversity, getUniversity, getFacultyList } = require('../controllers/university')
 
 /**
  * @swagger
@@ -78,4 +78,20 @@ router.post('/uniDetails', addUniversity)
  *              description: Some Error Occured (server error).
  */
 router.get('/uniDetails', getUniversity)
+
+/**
+ * @swagger
+ * /api/faculty:
+ *  get:
+ *      summary: get the faculties details.
+ *      description: get the faculty details for the newFeesback
+ *      responses:
+ *          200:
+ *              description: list of faculties.
+ *          204:
+ *              description: No entry Found
+ *          500:
+ *              description: Some Error Occured (server error).
+ */
+router.get('/faculty', getFacultyList)
 module.exports = router
