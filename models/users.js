@@ -20,9 +20,12 @@ const UserSchema = mongoose.Schema({
   department: {
     type: String
   },
-  // year: {
-  //   type: Number
-  // },
+  sem: {
+    type: Number
+  },
+  year: {
+    type: Number
+  },
   role: {
     type: String
   },

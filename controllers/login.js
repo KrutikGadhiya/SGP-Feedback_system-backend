@@ -3,8 +3,9 @@ const jwt = require('jsonwebtoken')
 const sendMail = require('../connection/sendMail')
 const UserModel = require('../models/users')
 
+// sem ans user shoud be calculated in frontend and sent to backend
 const signup = (req, res) => {
-  const { userName, email, password, role, institute, department } = req.body
+  const { userName, email, password, role, institute, department, sem, year } = req.body
   if (!userName || !email || !password || !role || !institute || !department) {
     return res.status(422).json({ message: "Please add all the Fields!!" })
   }
@@ -23,7 +24,9 @@ const signup = (req, res) => {
               role,
               otp,
               institute,
-              department
+              department,
+              sem,
+              year
             })
 
             newUser.save()

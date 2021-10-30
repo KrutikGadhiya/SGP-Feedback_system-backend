@@ -45,10 +45,31 @@ router.post('/newFeedback', newfeed)
 
 /**
  * @swagger
- * /api/getfeedbacklist:
+ * /api/getfeedbacklist?{institute}&{department}&{sem}&{year}:
  *  get:
  *      summary: get the feedback list
  *      description: API getting feedback list, all the feedback
+ *      parameters:
+ *         - in: query
+ *           name: institute
+ *           schema:
+ *             type: string
+ *           description: name of the Institute
+ *         - in: query
+ *           name: department
+ *           schema:
+ *             type: string
+ *           description: name of the Department
+ *         - in: query
+ *           name: sem
+ *           schema:
+ *             type: number
+ *           description: semister
+ *         - in: query
+ *           name: year
+ *           schema:
+ *             type: number
+ *           description: year
  *      responses:
  *          200:
  *              description: gives all the feedback
