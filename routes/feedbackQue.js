@@ -35,10 +35,16 @@ router.post('/addfeedbackque', feedbackQue)
 
 /**
  * @swagger
- * /api/getfeedbackque:
+ * /api/getfeedbackque?{id}:
  *  get:
  *      summary: get the feedback questions list
- *      description: API getting feedback questions list, all the feedback questions that were created by the admin
+ *      description: API getting feedback questions list, all/specific the feedback questions that were created by the admin
+ *      parameters:
+ *         - in: query
+ *           name: id
+ *           schema:
+ *             type: string
+ *           description: id (_id) of the feedback question
  *      responses:
  *          200:
  *              description: gives all the feedback question 

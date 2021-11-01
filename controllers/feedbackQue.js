@@ -23,12 +23,22 @@ const feedbackQue = async (req, res) => {
 
 }
 
+// ? check for the findById() and findOne()
+
 const getFeedbackQue = async (req, res) => {
-  const queList = await feedbackQuestions.find()
-  if (!queList.length) {
-    return res.status(204) //.json({ message: "No record Found" })
+  const { id } = req.query
+  let queList
+  try {
+    if (!id) queList = await feedbackQuestions.find()
+    else queList = await feedbackQuestions.find({ _id: id })
+    if (!queList || !queList.length) {
+      return res.status(204) //.json({ message: "No record Found" })
+    }
+    res.json(queList)
+  } catch (err) {
+    console.log(err)
+    return res.status(500).json({ message: "Some Error Occured" })
   }
-  res.json({ data: queList })
 }
 
 module.exports = { feedbackQue, getFeedbackQue }
