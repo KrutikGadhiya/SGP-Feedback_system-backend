@@ -66,8 +66,9 @@ const login = (req, res) => {
         .then(doMatch => {
           if (doMatch) {
             const token = jwt.sign({ id: savedUser._id }, process.env.JWT_SECRET, { expiresIn: '48h' })
-            const { _id, userName, email, role, isVerified, institute, department } = savedUser
-            res.status(200).json({ token, _id, userName, email, role, isVerified, institute, department })
+            const { _id, userName, email, role, isVerified, institute, department, sem, year } = savedUser
+            if (!sem && !year) res.status(200).json({ token, _id, userName, email, role, isVerified, institute, department })
+            else res.status(200).json({ token, _id, userName, email, role, isVerified, institute, department, sem, year })
           }
           else {
             return res.status(422).json({ message: "Invalid Email or Password!!" })
@@ -138,7 +139,7 @@ const getUser = async (req, res) => {
   try {
     const savedUser = await UserModel.findById(id)
     if (!savedUser) return res.status(404).json({ message: "User does not exist" })
-    console.log(savedUser)
+    // console.log(savedUser)
     return res.json({
       isVerified: savedUser.isVerified,
       _id: savedUser._id,
@@ -148,7 +149,9 @@ const getUser = async (req, res) => {
       createdAt: savedUser.createdAt,
       updatedAt: savedUser.updatedAt,
       department: savedUser.department,
-      institute: savedUser.institute
+      institute: savedUser.institute,
+      sem: savedUser.sem,
+      year: savedUser.year
     })
   } catch (err) {
     console.log(err)
