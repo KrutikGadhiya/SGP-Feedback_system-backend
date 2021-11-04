@@ -23,6 +23,10 @@ const { feedbackQue, getFeedbackQue } = require('../controllers/feedbackQue')
  *                                  type: string
  *                          createdBy:
  *                                type: string
+ *                  example:
+ *                      name: my feedback question
+ *                      questions: ["que1", "que2", "que3", "que4", "que5", "que6", "que7", "que8"]
+ *                      createdBy: 61812acd6503120004690ae8
  *      responses:
  *          200:
  *              description: feedback questions list added Successfully

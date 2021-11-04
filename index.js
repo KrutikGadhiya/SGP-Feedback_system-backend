@@ -12,7 +12,7 @@ const options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'Feedback System APIs',
+      title: 'Feedback System APIs (FeedSYS)',
       version: '1.0.0'
     },
     servers: [
@@ -26,7 +26,7 @@ const options = {
       scheme: 'bearer'
     }
   },
-  apis: ['./index.js', './routes/login.js', './routes/feedbackQue.js', './routes/newFeedback.js', './routes/university.js']
+  apis: ['./index.js', './routes/login.js', './routes/feedbackQue.js', './routes/newFeedback.js', './routes/university.js', './routes/feedbackAns.js', './routes/user.js']
 }
 
 // middlewares

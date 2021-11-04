@@ -11,11 +11,15 @@ router.put('/user', updateUser)
  *  delete:
  *      summary: Delete the user.
  *      description: AIP endpoint for deleting the user.
+ *      parameters:
+ *         - in: query
+ *           name: id
+ *           schema:
+ *             type: string
+ *           description: id of user
  *      responses:
  *          200:
- *              description: list of faculties.
- *          204:
- *              description: No entry Found
+ *              description: User with {userName} and {email} deleted Successfully.
  *          500:
  *              description: Some Error Occured (server error).
  */

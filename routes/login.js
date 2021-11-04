@@ -27,6 +27,13 @@ const { login, signup, verify, getUser } = require('../controllers/login')
  *                                type: string
  *                          department:
  *                                type: string
+ *                  example:
+ *                      email: user@mail.com
+ *                      password: 1234@Abc
+ *                      userName: user1998
+ *                      role: FACULTY / ADMIN / STUDENT
+ *                      institute: CSPIT
+ *                      department: IT
  *      responses:
  *          200:
  *              description: Signed-IN Successfully
@@ -54,6 +61,9 @@ router.post('/signUp', signup)
  *                                type: string
  *                          password:
  *                                type: string
+ *                  example:
+ *                      email: user@mail.com
+ *                      password: 1234@Abc
  *      responses:
  *          200:
  *              description: Signed-IN Successfully
@@ -88,6 +98,10 @@ router.post('/login', login)
  *                                type: number
  *                          reSend:
  *                                type: boolean
+ *                  example:
+ *                      email: user@mail.com
+ *                      otp: 123456
+ *                      reSend: false
  *      responses:
  *          200:
  *              description: Otp Send to your Email

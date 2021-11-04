@@ -21,12 +21,13 @@ const signup = (req, res) => {
               userName,
               email,
               password: hashedPassword,
-              role,
+              role: role.toLowerCase(),
               otp,
               institute,
               department,
               sem,
-              year
+              year,
+              avatar: `https://avatars.dicebear.com/api/identicon/${userName.replace(' ', '')}.svg`
             })
 
             newUser.save()
@@ -66,9 +67,9 @@ const login = (req, res) => {
         .then(doMatch => {
           if (doMatch) {
             const token = jwt.sign({ id: savedUser._id }, process.env.JWT_SECRET, { expiresIn: '48h' })
-            const { _id, userName, email, role, isVerified, institute, department, sem, year } = savedUser
-            if (!sem && !year) res.status(200).json({ token, _id, userName, email, role, isVerified, institute, department })
-            else res.status(200).json({ token, _id, userName, email, role, isVerified, institute, department, sem, year })
+            const { _id, userName, email, role, isVerified, institute, department, sem, year, avatar } = savedUser
+            if (!sem && !year) res.status(200).json({ token, _id, userName, email, role, isVerified, institute, department, avatar })
+            else res.status(200).json({ token, _id, userName, email, role, isVerified, institute, department, sem, year, avatar })
           }
           else {
             return res.status(422).json({ message: "Invalid Email or Password!!" })

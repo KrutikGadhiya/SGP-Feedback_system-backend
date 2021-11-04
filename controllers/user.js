@@ -2,7 +2,8 @@ const UserModel = require('../models/users')
 
 // * update user details
 const updateUser = (req, res) => {
-
+  // const { } = req.body
+  res.json(req.body)
 }
 
 // ! delete user

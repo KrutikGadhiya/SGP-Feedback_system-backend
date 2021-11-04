@@ -31,6 +31,13 @@ const { addUniversity, getUniversity, getFacultyList } = require('../controllers
  *                                  type: string
  *                          year:
  *                                type: number
+ *                  example:
+ *                      institute: CSPIT
+ *                      department: IT
+ *                      faculties: ["faculty1", "faculty2", "faculty3"]
+ *                      sem: 5
+ *                      courses: ["course1", "course2", "course3"]
+ *                      year: 2021
  *      responses:
  *          200:
  *              description: Added Successfully

@@ -19,7 +19,16 @@ const newfeed = async (req, res) => {
       return res.status(422).json({ message: "feedback already exist's with the same name" })
     }
 
-    const newFeed = new newFeedbackModal(req.body)
+    const newFeed = new newFeedbackModal({
+      name,
+      description,
+      feedbackFor,
+      feedbackOf,
+      feedbackQuestions,
+      createdBy,
+      dueFrom,
+      dueTo
+    })
     const savedFeedback = await newFeed.save()
     // console.log(savedFeedback)
     res.json({ message: "added new feedback" })
@@ -56,4 +65,18 @@ const getFeedbackList = async (req, res) => {
 
 }
 
-module.exports = { newfeed, getFeedbackList }
+// ! delete user
+const deleteFeedback = async (req, res) => {
+  const { id } = req.query
+  try {
+    const deleted = await newFeedbackModal.findByIdAndDelete(id)
+    // console.log(deleted)
+    if (!deleted) return res.status(422).json({ message: "User does not exist!" })
+    res.json({ message: `Feedback with name : ${deleted.name} deleted Successfully` })
+  } catch (err) {
+    console.log(err)
+    return res.status(500).json({ message: "Some Error Occured" })
+  }
+}
+
+module.exports = { newfeed, getFeedbackList, deleteFeedback }

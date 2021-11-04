@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { newfeed, getFeedbackList } = require('../controllers/newFeedback')
+const { newfeed, getFeedbackList, deleteFeedback } = require('../controllers/newFeedback')
 
 
 /**
@@ -21,9 +21,16 @@ const { newfeed, getFeedbackList } = require('../controllers/newFeedback')
  *                          description:
  *                                type: string
  *                          feedbackFor:
- *                                type: array
- *                                items:
- *                                  type: string
+ *                                type: object
+ *                                properties:
+ *                                  sem:
+ *                                    type: number
+ *                                  year:
+ *                                    type: number
+ *                                  institute:
+ *                                    type: string
+ *                                  department:
+ *                                    type: string
  *                          createdBy:
  *                                type: string
  *                          feedbackQuestions:
@@ -33,6 +40,15 @@ const { newfeed, getFeedbackList } = require('../controllers/newFeedback')
  *                                type: string
  *                          dueTo:
  *                                type: string
+ *                  example:
+ *                      name: Feedback 4.0
+ *                      description: Feedback for 19IT, Annual Faculty Feedback
+ *                      feedbackFor: {sem: 5, year: 2021, institute: CSPIT, department: IT}
+ *                      createdBy: 61812acd6503120004690ae8
+ *                      feedbackQuestions: 6176a7847af5f424242e7275
+ *                      feedbackOf: 617e7b5e121141000476e8f7
+ *                      dueFrom: 2021-11-04T08:04:52.642Z
+ *                      dueTo: 2021-12-04T08:04:52.642Z
  *      responses:
  *          200:
  *              description: feedback added Successfully
@@ -77,4 +93,24 @@ router.post('/newFeedback', newfeed)
  *              description: no feedback found, (nothing is returned in the response)
  */
 router.get('/getfeedbacklist', getFeedbackList)
+
+/**
+ * @swagger
+ * /api/feedback?{id}:
+ *  delete:
+ *      summary: Delete the Feedback.
+ *      description: AIP endpoint for deleting the Feedback.
+ *      parameters:
+ *         - in: query
+ *           name: id
+ *           schema:
+ *             type: string
+ *           description: Feedback id
+ *      responses:
+ *          200:
+ *              description: feedback with {name} deleted Successfully
+ *          500:
+ *              description: Some Error Occured (server error).
+ */
+router.delete('/feedback', deleteFeedback)
 module.exports = router

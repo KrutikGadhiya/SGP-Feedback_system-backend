@@ -31,6 +31,9 @@ const UserSchema = mongoose.Schema({
   },
   otp: {
     type: Number
+  },
+  avatar: {
+    type: String
   }
 }, { timestamps: true })
 
