@@ -30,7 +30,7 @@ const newfeed = async (req, res) => {
       dueTo
     })
     const savedFeedback = await newFeed.save()
-    // console.log(savedFeedback)
+    console.log(savedFeedback)
     res.json({ message: "added new feedback" })
   } catch (err) {
     console.log(err)

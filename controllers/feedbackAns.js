@@ -22,17 +22,20 @@ const addFeedbackAns = async (req, res) => {
 
 // TODO: for get route
 const getFeedbackAns = async (req, res) => {
-  const { feedId, userId } = req.query
+  const { id } = req.query
+  if (!id) return res.status(422).json({ message: "id not found" })
   try {
-    let feedAns
-    if (!feedId && !userId) feedAns = await feedbackAnsModel.find().populate("feedbackId", ["name", "feedbackFor", "feedbackOf"]).populate("userId", ["email", "userName"])
-    else if (!feedId && userId) feedAns = await feedbackAnsModel.find({ userId }).populate("feedbackId", ["name", "feedbackFor", "feedbackOf"]).populate("userId", ["email", "userName"])
-    else if (feedId && !userId) feedAns = await feedbackAnsModel.find({ feedbackId: feedId }).populate("feedbackId", ["name", "feedbackFor", "feedbackOf"]).populate("userId", ["email", "userName"])
-    else feedAns = await feedbackAnsModel.find({ userId, feedbackId: feedId }).populate("feedbackId", ["name", "feedbackFor", "feedbackOf"]).populate("userId", ["email", "userName"])
+    let feedAns = await feedbackAnsModel.find().populate("feedbackId", ["name", "feedbackFor", "feedbackOf"]).populate("userId", ["email", "userName"])
+    // if (!feedId && !userId) feedAns = await feedbackAnsModel.find().populate("feedbackId", ["name", "feedbackFor", "feedbackOf"]).populate("userId", ["email", "userName"])
+    // else if (!feedId && userId) feedAns = await feedbackAnsModel.find({ userId }).populate("feedbackId", ["name", "feedbackFor", "feedbackOf"]).populate("userId", ["email", "userName"])
+    // else if (feedId && !userId) feedAns = await feedbackAnsModel.find({ feedbackId: feedId }).populate("feedbackId", ["name", "feedbackFor", "feedbackOf"]).populate("userId", ["email", "userName"])
+    // else feedAns = await feedbackAnsModel.find({ userId, feedbackId: feedId }).populate("feedbackId", ["name", "feedbackFor", "feedbackOf"]).populate("userId", ["email", "userName"])
 
     if (!feedAns.length) return res.status(204)
-
-    res.json(feedAns)
+    let filtered = feedAns.filter((ans) => ans.feedbackId.feedbackOf == id)
+    console.log(filtered)
+    // res.json(feedAns)
+    res.json(filtered)
   } catch (err) {
     console.log(err)
     return res.status(500).json({ message: "Some Error Occured!!!" })

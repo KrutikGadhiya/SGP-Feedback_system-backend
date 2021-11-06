@@ -45,18 +45,15 @@ router.post('/feedbackAns', addFeedbackAns)
  *      description: API for getting list of Submitted feedback Ans/response based on the feedbackId or userId (both of them are optional, if noting provided API will  give the list of all the feedback submited answer)
  *      parameters:
  *         - in: query
- *           name: feedId
+ *           name: id
  *           schema:
  *             type: string
- *           description: id of the feedback
- *         - in: query
- *           name: userId
- *           schema:
- *             type: string
- *           description: id of the user
+ *           description: id of the faculty or course(not yet implemented)
  *      responses:
  *          200:
  *              description: list of Feedback Ans/response
+ *          422:
+ *              description: id not found
  *          204:
  *              description: NO Content/ no feedback Answer found
  *          500:
