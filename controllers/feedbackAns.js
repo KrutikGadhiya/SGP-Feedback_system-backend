@@ -20,22 +20,44 @@ const addFeedbackAns = async (req, res) => {
   }
 }
 
+const countFeedback = (list, queList) => {
+  let output = {}
+  for (let j = 0; j < list[0].length; j++) {
+    let maped = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
+    for (let i = 0; i < list.length; i++) {
+      maped = { ...maped, [list[i][j]]: ++maped[list[i][j]] }
+    }
+    // output.push(maped)
+    output = { ...output, [queList[j]]: maped }
+  }
+  return output
+}
+
 // TODO: for get route
 const getFeedbackAns = async (req, res) => {
   const { id } = req.query
+  let feedAnsList = []
   if (!id) return res.status(422).json({ message: "id not found" })
   try {
-    let feedAns = await feedbackAnsModel.find().populate("feedbackId", ["name", "feedbackFor", "feedbackOf"]).populate("userId", ["email", "userName"])
-    // if (!feedId && !userId) feedAns = await feedbackAnsModel.find().populate("feedbackId", ["name", "feedbackFor", "feedbackOf"]).populate("userId", ["email", "userName"])
-    // else if (!feedId && userId) feedAns = await feedbackAnsModel.find({ userId }).populate("feedbackId", ["name", "feedbackFor", "feedbackOf"]).populate("userId", ["email", "userName"])
-    // else if (feedId && !userId) feedAns = await feedbackAnsModel.find({ feedbackId: feedId }).populate("feedbackId", ["name", "feedbackFor", "feedbackOf"]).populate("userId", ["email", "userName"])
-    // else feedAns = await feedbackAnsModel.find({ userId, feedbackId: feedId }).populate("feedbackId", ["name", "feedbackFor", "feedbackOf"]).populate("userId", ["email", "userName"])
+    // let feedAns = await feedbackAnsModel.find().lean().populate("feedbackId", ["name", "feedbackFor", "feedbackOf", "feedbackQuestions"]).populate("userId", ["email", "userName"])
+    let feedAns = await feedbackAnsModel.find().populate({
+      path: 'feedbackId',
+      populate: {
+        path: 'feedbackQuestions',
+        model: 'FeedbackQuestions'
+      }
+    }).populate("userId", ["email", "userName"])
+    // console.log(temp)
 
     if (!feedAns.length) return res.status(204)
     let filtered = feedAns.filter((ans) => ans.feedbackId.feedbackOf == id)
-    console.log(filtered)
+    filtered.forEach(ans => feedAnsList.push(ans.ans))
+    // console.log(feedAnsList)
+    // console.log(filtered[0].feedbackId.feedbackQuestions.questions)
+    const mapedAns = countFeedback(feedAnsList, filtered[0].feedbackId.feedbackQuestions.questions)
+    // console.log(mapedAns)
     // res.json(feedAns)
-    res.json(filtered)
+    res.json(mapedAns)
   } catch (err) {
     console.log(err)
     return res.status(500).json({ message: "Some Error Occured!!!" })

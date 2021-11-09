@@ -42,7 +42,7 @@ router.post('/feedbackAns', addFeedbackAns)
  *  /api/feedbackAns?{id}:
  *    get:
  *      summary: Endpoint for getting the Submited feedback Ans
- *      description: API for getting list of Submitted feedback Ans/response based on the feedbackId or userId (both of them are optional, if noting provided API will  give the list of all the feedback submited answer)
+ *      description: API for getting list of Submitted feedback Ans/response based on the faculty / course id
  *      parameters:
  *         - in: query
  *           name: id
