@@ -18,15 +18,22 @@ const options = {
     servers: [
       { url: 'http://localhost:5000/' },
       { url: 'https://sgp-feedback-system.herokuapp.com/' }
-    ]
+    ],
+    components: {
+      securitySchemes: {
+        BearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT'
+        }
+      }
+    },
+    security: [
+      { BearerAuth: [], }
+    ],
   },
-  components: {
-    BearerAuth: {
-      type: 'http',
-      scheme: 'bearer'
-    }
-  },
-  apis: ['./index.js', './routes/login.js', './routes/feedbackQue.js', './routes/newFeedback.js', './routes/university.js', './routes/feedbackAns.js', './routes/user.js']
+  // apis: ['./index.js', './routes/login.js', './routes/feedbackQue.js', './routes/newFeedback.js', './routes/university.js', './routes/feedbackAns.js', './routes/user.js']
+  apis: ['./index.js', './routes/*.js']
 }
 
 // middlewares

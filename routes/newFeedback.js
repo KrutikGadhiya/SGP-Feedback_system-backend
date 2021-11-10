@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const auth = require('../middleware/requireLogin')
 const { newfeed, getFeedbackList, deleteFeedback } = require('../controllers/newFeedback')
 
 
@@ -57,7 +58,7 @@ const { newfeed, getFeedbackList, deleteFeedback } = require('../controllers/new
  *          500:
  *              description: Some error Occured
  */
-router.post('/newFeedback', newfeed)
+router.post('/newFeedback', auth, newfeed)
 
 /**
  * @swagger
@@ -92,7 +93,7 @@ router.post('/newFeedback', newfeed)
  *          204:
  *              description: no feedback found, (nothing is returned in the response)
  */
-router.get('/getfeedbacklist', getFeedbackList)
+router.get('/getfeedbacklist', auth, getFeedbackList)
 
 /**
  * @swagger
@@ -112,5 +113,5 @@ router.get('/getfeedbacklist', getFeedbackList)
  *          500:
  *              description: Some Error Occured (server error).
  */
-router.delete('/feedback', deleteFeedback)
+router.delete('/feedback', auth, deleteFeedback)
 module.exports = router

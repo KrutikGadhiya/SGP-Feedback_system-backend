@@ -1,4 +1,5 @@
 const { newFeedbackModal, newCourseFeedbackModal } = require('../models/newFeedback')
+const { feedbackAnsModel } = require('../models/feedbackAns')
 
 const newfeed = async (req, res) => {
   // console.log(req.body)
@@ -38,11 +39,24 @@ const newfeed = async (req, res) => {
   }
 }
 
+const notGivenFeed = (feedlist, givenList) => {
+  let notgiven = []
+  for (let i = 0; i < feedlist.length; i++) {
+    const { _id } = feedlist[i]
+    if (!givenList.includes(String(_id))) notgiven.push(feedlist[i])
+  }
+  return notgiven
+}
+
 const getFeedbackList = async (req, res) => {
   const { institute, department, sem, year } = req.query
-
+  // console.log(req.user)
   try {
     const feedbackList = await newFeedbackModal.find().populate("createdBy", ['userName', 'email']).populate("feedbackQuestions", 'name').populate("feedbackOf")
+    let givenFeedbacks = await feedbackAnsModel.find()
+    givenFeedbacks = givenFeedbacks.map((ans) => ({ fid: ans.feedbackId, uid: ans.userId })).filter((i) => String(i.uid) == String(req.user._id))
+    // console.log(givenFeedbacks)
+    // console.log(givenFeedbacks.filter((i) => String(i.uid) == String(req.user._id)))
     let finalLst
 
     if (institute && department) { finalLst = feedbackList.filter((dtl) => dtl.feedbackFor.institute == institute && dtl.feedbackFor.department == department) }
@@ -54,10 +68,15 @@ const getFeedbackList = async (req, res) => {
       return res.status(204) //.json({ message: "No record Found" })
     }
 
-    if (sem && year) return res.json(finalLst.filter((detail) => detail.feedbackFor.sem == sem && detail.feedbackFor.year == year))
-    else if (sem && !year) return res.json(finalLst.filter((detail) => detail.feedbackFor.sem == sem))
-    else if (!sem && year) return res.json(finalLst.filter((detail) => detail.feedbackFor.year == year))
-    else if (!sem && !year) return res.json(finalLst)
+    // console.log(givenFeedbacks.map((itm) => (String(itm.fid))))
+    let notGiven = notGivenFeed(finalLst, givenFeedbacks.map((itm) => (String(itm.fid))))
+    // console.log(notGiven)
+    // console.log(notGiven.length)
+
+    if (sem && year) return res.json(notGiven.filter((detail) => detail.feedbackFor.sem == sem && detail.feedbackFor.year == year))
+    else if (sem && !year) return res.json(notGiven.filter((detail) => detail.feedbackFor.sem == sem))
+    else if (!sem && year) return res.json(notGiven.filter((detail) => detail.feedbackFor.year == year))
+    else if (!sem && !year) return res.json(notGiven)
 
   } catch (err) {
     console.log(err)

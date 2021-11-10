@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const auth = require('../middleware/requireLogin')
 const { feedbackQue, getFeedbackQue } = require('../controllers/feedbackQue')
 
 /**
@@ -35,7 +36,7 @@ const { feedbackQue, getFeedbackQue } = require('../controllers/feedbackQue')
  *          500:
  *              description: Some error Occured
  */
-router.post('/addfeedbackque', feedbackQue)
+router.post('/addfeedbackque', auth, feedbackQue)
 
 /**
  * @swagger
@@ -55,5 +56,5 @@ router.post('/addfeedbackque', feedbackQue)
  *          204:
  *              description: no feedback found
  */
-router.get('/getfeedbackque', getFeedbackQue)
+router.get('/getfeedbackque', auth, getFeedbackQue)
 module.exports = router

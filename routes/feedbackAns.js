@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const auth = require('../middleware/requireLogin')
 const { addFeedbackAns, getFeedbackAns } = require('../controllers/feedbackAns')
 
 
@@ -35,7 +36,7 @@ const { addFeedbackAns, getFeedbackAns } = require('../controllers/feedbackAns')
  *              description: Some error Occured
  */
 // TODO: feedback ans post
-router.post('/feedbackAns', addFeedbackAns)
+router.post('/feedbackAns', auth, addFeedbackAns)
 
 /**
  * @swagger
@@ -60,6 +61,6 @@ router.post('/feedbackAns', addFeedbackAns)
  *              description: Some error Occured
  */
 // TODO: feedback ans get
-router.get('/feedbackAns', getFeedbackAns)
+router.get('/feedbackAns', auth, getFeedbackAns)
 
 module.exports = router

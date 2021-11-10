@@ -1,9 +1,10 @@
 const express = require('express')
 const router = express.Router()
+const auth = require('../middleware/requireLogin')
 const { updateUser, deleteUser } = require('../controllers/user')
 
 // TODO: update route for user
-router.put('/user', updateUser)
+router.put('/user', auth, updateUser)
 
 /**
  * @swagger
@@ -24,6 +25,6 @@ router.put('/user', updateUser)
  *              description: Some Error Occured (server error).
  */
 // TODO: delete route for user
-router.delete('/user', deleteUser)
+router.delete('/user', auth, deleteUser)
 
 module.exports = router

@@ -36,6 +36,7 @@ const countFeedback = (list, queList) => {
 // TODO: for get route
 const getFeedbackAns = async (req, res) => {
   const { id } = req.query
+  // console.log(req.headers.authorization)
   let feedAnsList = []
   if (!id) return res.status(422).json({ message: "id not found" })
   try {
@@ -50,6 +51,7 @@ const getFeedbackAns = async (req, res) => {
     // console.log(temp)
 
     if (!feedAns.length) return res.status(204)
+    // console.log(feedAns)
     let filtered = feedAns.filter((ans) => ans.feedbackId.feedbackOf == id)
     filtered.forEach(ans => feedAnsList.push(ans.ans))
     // console.log(feedAnsList)

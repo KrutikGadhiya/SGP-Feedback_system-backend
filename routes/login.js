@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const auth = require('../middleware/requireLogin')
 const { login, signup, verify, getUser } = require('../controllers/login')
 
 /**
@@ -136,6 +137,6 @@ router.post('/verify', verify)
  *          500:
  *              Some error occured
  */
-router.get('/user', getUser)
+router.get('/user', auth, getUser)
 
 module.exports = router
