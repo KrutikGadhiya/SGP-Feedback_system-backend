@@ -29,7 +29,7 @@ const getFeedbackQue = async (req, res) => {
   const { id } = req.query
   let queList
   try {
-    if (!id) queList = await feedbackQuestions.find()
+    if (!id) queList = await feedbackQuestions.find().populate('createdBy', ['userName', 'email'])
     else queList = await feedbackQuestions.find({ _id: id })
     if (!queList || !queList.length) {
       return res.status(204) //.json({ message: "No record Found" })
