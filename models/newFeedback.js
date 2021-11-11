@@ -53,12 +53,13 @@ const newCourseFeedbackSchema = mongoose.Schema({
     }
   },
   feedbackOf: {
-    type: [],
+    type: ObjectId,
+    ref: 'Courses'
   },
   feedbackQuestions: {
     type: ObjectId,
     ref: "FeedbackQuestions",
-    default: "613da2c057719d0f0055c8e0"
+    default: "6176a7847af5f424242e7275"
   },
   createdBy: {
     type: ObjectId,

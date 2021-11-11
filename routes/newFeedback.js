@@ -1,15 +1,15 @@
 const express = require('express')
 const router = express.Router()
 const auth = require('../middleware/requireLogin')
-const { newfeed, getFeedbackList, deleteFeedback } = require('../controllers/newFeedback')
+const { newfeed, getFeedbackList, deleteFeedback, newCoursefeed, getCourseFeedbackList } = require('../controllers/newFeedback')
 
 
 /**
  * @swagger
  * /api/newFeedback:
  *  post:
- *      summary: Add new feedback.
- *      description: API for new feedback.
+ *      summary: Add new Faculty feedback.
+ *      description: API for new Faculty feedback.
  *      requestBody:
  *          required: true
  *          content:
@@ -59,13 +59,68 @@ const { newfeed, getFeedbackList, deleteFeedback } = require('../controllers/new
  *              description: Some error Occured
  */
 router.post('/newFeedback', auth, newfeed)
+/**
+ * @swagger
+ * /api/courseFeedback:
+ *  post:
+ *      summary: Add new Course feedback.
+ *      description: API for new Course feedback.
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          name:
+ *                                type: string
+ *                          description:
+ *                                type: string
+ *                          feedbackFor:
+ *                                type: object
+ *                                properties:
+ *                                  sem:
+ *                                    type: number
+ *                                  year:
+ *                                    type: number
+ *                                  institute:
+ *                                    type: string
+ *                                  department:
+ *                                    type: string
+ *                          createdBy:
+ *                                type: string
+ *                          feedbackQuestions:
+ *                                type: string
+ *                                default: "613da2c057719d0f0055c8e0"
+ *                          dueFrom:
+ *                                type: string
+ *                          dueTo:
+ *                                type: string
+ *                  example:
+ *                      name: PY Feedback
+ *                      description: Feedback for Python Programming course
+ *                      feedbackFor: {sem: 5, year: 2021, institute: CSPIT, department: IT}
+ *                      createdBy: 61812acd6503120004690ae8
+ *                      feedbackQuestions: 6176a7847af5f424242e7275
+ *                      feedbackOf: 618be79b42db1e2a78a3715b
+ *                      dueFrom: 2021-11-04T08:04:52.642Z
+ *                      dueTo: 2021-12-04T08:04:52.642Z
+ *      responses:
+ *          200:
+ *              description: feedback added Successfully
+ *          422:
+ *              description: feedback already exist's with the same name
+ *          500:
+ *              description: Some error Occured
+ */
+router.post('/courseFeedback', auth, newCoursefeed)
 
 /**
  * @swagger
- * /api/getfeedbacklist?{institute}&{department}&{sem}&{year}:
+ * /api/courseFeedback?{institute}&{department}&{sem}&{year}:
  *  get:
- *      summary: get the feedback list
- *      description: API getting feedback list, all the feedback
+ *      summary: get the course feedback list
+ *      description: API getting course feedback list, all the feedback
  *      parameters:
  *         - in: query
  *           name: institute
@@ -89,11 +144,11 @@ router.post('/newFeedback', auth, newfeed)
  *           description: year
  *      responses:
  *          200:
- *              description: gives all the feedback
+ *              description: gives all the course feedback depending upon the parameters
  *          204:
  *              description: no feedback found, (nothing is returned in the response)
  */
-router.get('/getfeedbacklist', auth, getFeedbackList)
+router.get('/courseFeedback', auth, getCourseFeedbackList)
 
 /**
  * @swagger
