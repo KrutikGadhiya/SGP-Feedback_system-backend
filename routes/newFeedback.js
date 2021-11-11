@@ -117,6 +117,40 @@ router.post('/courseFeedback', auth, newCoursefeed)
 
 /**
  * @swagger
+ * /api/getfeedbacklist?{institute}&{department}&{sem}&{year}:
+ *  get:
+ *      summary: get the course feedback list
+ *      description: API getting course feedback list, all the feedback
+ *      parameters:
+ *         - in: query
+ *           name: institute
+ *           schema:
+ *             type: string
+ *           description: name of the Institute
+ *         - in: query
+ *           name: department
+ *           schema:
+ *             type: string
+ *           description: name of the Department
+ *         - in: query
+ *           name: sem
+ *           schema:
+ *             type: number
+ *           description: semister
+ *         - in: query
+ *           name: year
+ *           schema:
+ *             type: number
+ *           description: year
+ *      responses:
+ *          200:
+ *              description: gives all the feedback depending upon the parameters
+ *          204:
+ *              description: no feedback found, (nothing is returned in the response)
+ */
+router.get('/getfeedbacklist', auth, getFeedbackList)
+/**
+ * @swagger
  * /api/courseFeedback?{institute}&{department}&{sem}&{year}:
  *  get:
  *      summary: get the course feedback list
