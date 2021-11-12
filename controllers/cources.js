@@ -49,4 +49,18 @@ const getCouses = async (req, res) => {
   }
 }
 
-module.exports = { addCourses, getCouses }
+// ! delete course
+const deleteCourses = async (req, res) => {
+  const { id } = req.query
+  try {
+    const deleted = await coursesModel.findByIdAndDelete(id)
+    // console.log(deleted)
+    if (!deleted) return res.status(422).json({ message: "Course does not exist!" })
+    res.json({ message: `Feedback with name : ${deleted.name} deleted Successfully` })
+  } catch (err) {
+    console.log(err)
+    return res.status(500).json({ message: "Some Error Occured" })
+  }
+}
+
+module.exports = { addCourses, getCouses, deleteCourses }

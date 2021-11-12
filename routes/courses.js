@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
-const { addCourses, getCouses } = require('../controllers/cources')
+const auth = require('../middleware/requireLogin')
+const { addCourses, getCouses, deleteCourses } = require('../controllers/cources')
 
 /**
  * @swagger
@@ -43,7 +44,7 @@ const { addCourses, getCouses } = require('../controllers/cources')
  *              description: Some error Occured
  */
 // TODO: router for adding course
-router.post('/courses', addCourses)
+router.post('/courses', auth, addCourses)
 
 /**
  * @swagger
@@ -79,6 +80,26 @@ router.post('/courses', addCourses)
  *              description: no course found, (nothing is returned in the response)
  */
 // TODO: router for getting course
-router.get('/courses', getCouses)
+router.get('/courses', auth, getCouses)
+
+/**
+ * @swagger
+ * /api/courses?{id}:
+ *  delete:
+ *      summary: Delete the course.
+ *      description: AIP endpoint for deleting the Course.
+ *      parameters:
+ *         - in: query
+ *           name: id
+ *           schema:
+ *             type: string
+ *           description: Course id
+ *      responses:
+ *          200:
+ *              description: Course with {name} deleted Successfully
+ *          500:
+ *              description: Some Error Occured (server error).
+ */
+router.delete('/courses', auth, deleteCourses)
 
 module.exports = router

@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const auth = require('../middleware/requireLogin')
-const { feedbackQue, getFeedbackQue } = require('../controllers/feedbackQue')
+const { feedbackQue, getFeedbackQue, deleteFeedbackQue } = require('../controllers/feedbackQue')
 
 /**
  * @swagger
@@ -57,4 +57,24 @@ router.post('/addfeedbackque', auth, feedbackQue)
  *              description: no feedback found
  */
 router.get('/getfeedbackque', auth, getFeedbackQue)
+
+/**
+ * @swagger
+ * /api/feedbackQue?{id}:
+ *  delete:
+ *      summary: Delete the Feedback question Template.
+ *      description: AIP endpoint for deleting the Feedback question template.
+ *      parameters:
+ *         - in: query
+ *           name: id
+ *           schema:
+ *             type: string
+ *           description: FeedbackQue id
+ *      responses:
+ *          200:
+ *              description: feedbackQue with {name} deleted Successfully
+ *          500:
+ *              description: Some Error Occured (server error).
+ */
+router.delete('/feedbackQue', auth, deleteFeedbackQue)
 module.exports = router

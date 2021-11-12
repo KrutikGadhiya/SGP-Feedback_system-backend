@@ -162,7 +162,7 @@ const deleteFeedback = async (req, res) => {
   try {
     const deleted = await newFeedbackModal.findByIdAndDelete(id)
     // console.log(deleted)
-    if (!deleted) return res.status(422).json({ message: "User does not exist!" })
+    if (!deleted) return res.status(422).json({ message: "Feedback does not exist!" })
     res.json({ message: `Feedback with name : ${deleted.name} deleted Successfully` })
   } catch (err) {
     console.log(err)

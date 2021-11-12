@@ -41,4 +41,19 @@ const getFeedbackQue = async (req, res) => {
   }
 }
 
-module.exports = { feedbackQue, getFeedbackQue }
+// ! delete user
+const deleteFeedbackQue = async (req, res) => {
+  const { id } = req.query
+  try {
+    const deleted = await feedbackQuestions.findByIdAndDelete(id)
+    // console.log(deleted)
+    if (!deleted) return res.status(422).json({ message: "Template does not exist!" })
+    res.json({ message: `Feedback with name : ${deleted.name} deleted Successfully` })
+  } catch (err) {
+    console.log(err)
+    return res.status(500).json({ message: "Some Error Occured" })
+  }
+}
+
+
+module.exports = { feedbackQue, getFeedbackQue, deleteFeedbackQue }
