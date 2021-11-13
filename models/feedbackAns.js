@@ -15,6 +15,21 @@ const feedbackAnsSchema = mongoose.Schema({
   }
 }, { timestamps: true })
 
-const feedbackAnsModel = mongoose.model('FeedbackAns', feedbackAnsSchema)
+const courseFeedbackAnsSchema = mongoose.Schema({
+  feedbackId: {
+    type: ObjectId,
+    ref: 'CourseFeedback'
+  },
+  userId: {
+    type: ObjectId,
+    ref: 'User'
+  },
+  ans: {
+    type: []
+  }
+}, { timestamps: true })
 
-module.exports = { feedbackAnsModel }
+const feedbackAnsModel = mongoose.model('FeedbackAns', feedbackAnsSchema)
+const courseFeedbackAnsModel = mongoose.model('CourseFeedbackAns', courseFeedbackAnsSchema)
+
+module.exports = { feedbackAnsModel, courseFeedbackAnsModel }
