@@ -60,8 +60,9 @@ const login = (req, res) => {
       if (!savedUser) {
         return res.status(404).json({ message: "IT seems like You dont have an account, Sign-Up to continue" })
       }
+      // console.log(savedUser)
       if (!savedUser.isVerified) {
-        return res.status(401).json({ message: "User Not Verified" })
+        return res.status(401).json({ message: "User Not Verified", role: savedUser.role })
       }
       bcrypt.compare(password, savedUser.password)
         .then(doMatch => {
