@@ -120,7 +120,7 @@ const verify = (req, res) => {
             .then(updated => {
               // console.log(updated)
               // res.send(success())
-              res.status(200).json({ message: "Verified Successfully" })
+              res.status(200).json({ message: "Verified Successfully", user: user })
             })
             .catch(err => {
               // res.send(error())

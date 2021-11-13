@@ -20,15 +20,49 @@ const addFeedbackAns = async (req, res) => {
   }
 }
 
-const countFeedback = (list, queList) => {
-  let output = {}
+const categorize = (list) => {
+  let categorizedList = {}
+  for (let i = 0; i < list.length; i++) {
+    let sem = list[i].feedbackId.feedbackFor.sem
+    let depart = list[i].feedbackId.feedbackFor.department
+    // console.log(sem, depart)
+    // console.log(list[i].feedbackId.feedbackFor)
+    if (`${sem}${depart}` in categorizedList)
+      categorizedList = { ...categorizedList, [`${sem}${depart}`]: [...categorizedList[`${sem}${depart}`], list[i]] }
+    else
+      categorizedList = { ...categorizedList, [`${sem}${depart}`]: [list[i]] }
+  }
+  // console.log(categorizedList)
+  return categorizedList
+}
+const categorizedAns = (list) => {
+  let finalList = []
+  Object.entries(list).forEach(([k, v]) => {
+    let entry = { feedFor: k, questions: v[0].feedbackId.feedbackQuestions.questions, analytics: [] }
+    let feedAnsList = []
+    // console.log(k, v, v.length)
+    for (let i = 0; i < v.length; i++) {
+      feedAnsList.push(v[i].ans)
+    }
+    // console.log(feedAnsList)
+    entry.analytics = countFeedback(feedAnsList)
+    finalList.push(entry)
+  })
+  // console.dir(finalList,{depth:null})
+  return finalList
+}
+
+const countFeedback = (list) => {
+  // let output = {}
+  let output = []
   for (let j = 0; j < list[0].length; j++) {
     let maped = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
     for (let i = 0; i < list.length; i++) {
       maped = { ...maped, [list[i][j]]: ++maped[list[i][j]] }
     }
     // output.push(maped)
-    output = { ...output, [queList[j]]: maped }
+    //   output = { ...output, [queList[j]]: maped }
+    output.push(maped)
   }
   return output
 }
@@ -54,10 +88,11 @@ const getFeedbackAns = async (req, res) => {
     // console.log(feedAns)
     let filtered = feedAns.filter((ans) => ans.feedbackId.feedbackOf == id)
     // return res.json(filtered)
-    filtered.forEach(ans => feedAnsList.push(ans.ans))
+    // filtered.forEach(ans => feedAnsList.push(ans.ans))
     // console.log(feedAnsList)
     // console.log(filtered[0].feedbackId.feedbackQuestions.questions)
-    const mapedAns = countFeedback(feedAnsList, filtered[0].feedbackId.feedbackQuestions.questions)
+    // const mapedAns = countFeedback(feedAnsList, filtered[0].feedbackId.feedbackQuestions.questions)
+    const mapedAns = categorizedAns(categorize(filtered))
     // console.log(mapedAns)
     // res.json(feedAns)
     res.json(mapedAns)
