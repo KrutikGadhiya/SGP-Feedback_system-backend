@@ -28,24 +28,29 @@ const getCouses = async (req, res) => {
   const { institute, department, sem, year } = req.query
   try {
     let courseList = await coursesModel.find()
-    // let finalLst
+    let finalLst
 
-    if (institute && department) { courseList = courseList.filter((dtl) => dtl.institute == institute && dtl.department == department) }
-    else if (!institute && department) { courseList = courseList.filter((dtl) => dtl.department == department) }
-    else if (institute && !department) { courseList = courseList.filter((dtl) => dtl.institute == institute) }
-    else if (!institute && !department) { courseList = await coursesModel.find() }
+    if (institute && department) { finalLst = courseList.filter((dtl) => dtl.institute.toUpperCase() == institute.toUpperCase() && dtl.department.toUpperCase() == department.toUpperCase()) }
+    else if (!institute && department) { finalLst = courseList.filter((dtl) => dtl.department.toUpperCase() == department.toUpperCase()) }
+    else if (institute && !department) { finalLst = courseList.filter((dtl) => dtl.institute.toUpperCase() == institute.toUpperCase()) }
+    else if (!institute && !department) { finalLst = courseList }
 
-    if (!courseList.length) {
-      return res.status(204) //.json({ message: "No record Found" })
+    // console.log("a:", finalLst)
+    // console.log("a:", finalLst.length)
+
+    if (finalLst.length == 0 || !finalLst.length) {
+      // console.log("a:", finalLst.length)
+      return res.status(204).json({ message: "No record Found" })
     }
 
-    if (sem && year) return res.json(courseList.filter((detail) => detail.sem == sem && detail.year == year))
-    else if (sem && !year) return res.json(courseList.filter((detail) => detail.sem == sem))
-    else if (!sem && year) return res.json(courseList.filter((detail) => detail.year == year))
-    else if (!sem && !year) return res.json(courseList)
+    if (sem && year) return res.json(finalLst.filter((detail) => detail.sem == sem && detail.year == year))
+    else if (sem && !year) return res.json(finalLst.filter((detail) => detail.sem == sem))
+    else if (!sem && year) return res.json(finalLst.filter((detail) => detail.year == year))
+    else if (!sem && !year) return res.json(finalLst)
 
   } catch (err) {
     console.log(err)
+    return res.status(500).json({ message: "Some Error Occured!" })
   }
 }
 

@@ -96,13 +96,13 @@ const getFeedbackList = async (req, res) => {
     // console.log(givenFeedbacks.filter((i) => String(i.uid) == String(req.user._id)))
     let finalLst
 
-    if (institute && department) { finalLst = feedbackList.filter((dtl) => dtl.feedbackFor.institute == institute && dtl.feedbackFor.department == department) }
-    else if (!institute && department) { finalLst = feedbackList.filter((dtl) => dtl.feedbackFor.department == department) }
-    else if (institute && !department) { finalLst = feedbackList.filter((dtl) => dtl.feedbackFor.institute == institute) }
+    if (institute && department) { finalLst = feedbackList.filter((dtl) => dtl.feedbackFor.institute.toUpperCase() == institute.toUpperCase() && dtl.feedbackFor.department.toUpperCase() == department.toUpperCase()) }
+    else if (!institute && department) { finalLst = feedbackList.filter((dtl) => dtl.feedbackFor.department.toUpperCase() == department.toUpperCase()) }
+    else if (institute && !department) { finalLst = feedbackList.filter((dtl) => dtl.feedbackFor.institute.toUpperCase() == institute.toUpperCase()) }
     else if (!institute && !department) { finalLst = feedbackList }
 
     if (!finalLst.length) {
-      return res.status(204) //.json({ message: "No record Found" })
+      return res.status(204).json({ message: "No record Found" })
     }
 
     // console.log(givenFeedbacks.map((itm) => (String(itm.fid))))
@@ -131,13 +131,13 @@ const getCourseFeedbackList = async (req, res) => {
     // console.log(givenFeedbacks.filter((i) => String(i.uid) == String(req.user._id)))
     let finalLst
 
-    if (institute && department) { finalLst = feedbackList.filter((dtl) => dtl.feedbackFor.institute == institute && dtl.feedbackFor.department == department) }
-    else if (!institute && department) { finalLst = feedbackList.filter((dtl) => dtl.feedbackFor.department == department) }
-    else if (institute && !department) { finalLst = feedbackList.filter((dtl) => dtl.feedbackFor.institute == institute) }
+    if (institute && department) { finalLst = feedbackList.filter((dtl) => dtl.feedbackFor.institute.toUpperCase() == institute.toUpperCase() && dtl.feedbackFor.department.toUpperCase() == department.toUpperCase()) }
+    else if (!institute && department) { finalLst = feedbackList.filter((dtl) => dtl.feedbackFor.department.toUpperCase() == department.toUpperCase()) }
+    else if (institute && !department) { finalLst = feedbackList.filter((dtl) => dtl.feedbackFor.institute.toUpperCase() == institute.toUpperCase()) }
     else if (!institute && !department) { finalLst = feedbackList }
 
     if (!finalLst.length) {
-      return res.status(204) //.json({ message: "No record Found" })
+      return res.status(204).json({ message: "No record Found" })
     }
 
     // console.log(givenFeedbacks.map((itm) => (String(itm.fid))))
