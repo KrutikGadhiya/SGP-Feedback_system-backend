@@ -1,5 +1,5 @@
 const { newFeedbackModal, newCourseFeedbackModal } = require('../models/newFeedback')
-const { feedbackAnsModel } = require('../models/feedbackAns')
+const { feedbackAnsModel, courseFeedbackAnsModel } = require('../models/feedbackAns')
 
 const newfeed = async (req, res) => {
   // console.log(req.body)
@@ -163,6 +163,11 @@ const deleteFeedback = async (req, res) => {
   const { id } = req.query
   try {
     const deleted = await newFeedbackModal.findByIdAndDelete(id)
+    let deletedAns
+    // console.log(deleted)
+    if (deleted != null)
+      deletedAns = await feedbackAnsModel.deleteMany({ feedbackId: deleted._id })
+    // console.log(deletedAns)
     // console.log(deleted)
     if (!deleted) return res.status(422).json({ message: "Feedback does not exist!" })
     res.json({ message: `Feedback with name : ${deleted.name} deleted Successfully` })
@@ -177,7 +182,11 @@ const deleteCourseFeedback = async (req, res) => {
   const { id } = req.query
   try {
     const deleted = await newCourseFeedbackModal.findByIdAndDelete(id)
+    let deletedAns
     // console.log(deleted)
+    if (deleted != null)
+      deletedAns = await courseFeedbackAnsModel.deleteMany({ feedbackId: deleted._id })
+
     if (!deleted) return res.status(422).json({ message: "Feedback does not exist!" })
     res.json({ message: `Feedback with name : ${deleted.name} deleted Successfully` })
   } catch (err) {
