@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const auth = require('../middleware/requireLogin')
-const { newfeed, getFeedbackList, deleteFeedback, newCoursefeed, getCourseFeedbackList } = require('../controllers/newFeedback')
+const { newfeed, getFeedbackList, deleteFeedback, newCoursefeed, getCourseFeedbackList, deleteCourseFeedback } = require('../controllers/newFeedback')
 
 
 /**
@@ -203,4 +203,23 @@ router.get('/courseFeedback', auth, getCourseFeedbackList)
  *              description: Some Error Occured (server error).
  */
 router.delete('/feedback', auth, deleteFeedback)
+/**
+ * @swagger
+ * /api/courseFeedback?{id}:
+ *  delete:
+ *      summary: Delete the course Feedback.
+ *      description: AIP endpoint for deleting the course Feedback.
+ *      parameters:
+ *         - in: query
+ *           name: id
+ *           schema:
+ *             type: string
+ *           description: Feedback id
+ *      responses:
+ *          200:
+ *              description: feedback with {name} deleted Successfully
+ *          500:
+ *              description: Some Error Occured (server error).
+ */
+router.delete('/courseFeedback', auth, deleteCourseFeedback)
 module.exports = router

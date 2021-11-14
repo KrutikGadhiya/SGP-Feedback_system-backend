@@ -102,7 +102,8 @@ const getFeedbackList = async (req, res) => {
     else if (!institute && !department) { finalLst = feedbackList }
 
     if (!finalLst.length) {
-      return res.status(204).json({ message: "No record Found" })
+      // return res.status(204).json({ message: "No record Found" })
+      return res.json([])
     }
 
     // console.log(givenFeedbacks.map((itm) => (String(itm.fid))))
@@ -137,7 +138,8 @@ const getCourseFeedbackList = async (req, res) => {
     else if (!institute && !department) { finalLst = feedbackList }
 
     if (!finalLst.length) {
-      return res.status(204).json({ message: "No record Found" })
+      // return res.status(204)//.json({ message: "No record Found" })
+      return res.json([])
     }
 
     // console.log(givenFeedbacks.map((itm) => (String(itm.fid))))
@@ -170,4 +172,18 @@ const deleteFeedback = async (req, res) => {
   }
 }
 
-module.exports = { newfeed, getFeedbackList, deleteFeedback, newCoursefeed, getCourseFeedbackList }
+// ! delete user
+const deleteCourseFeedback = async (req, res) => {
+  const { id } = req.query
+  try {
+    const deleted = await newCourseFeedbackModal.findByIdAndDelete(id)
+    // console.log(deleted)
+    if (!deleted) return res.status(422).json({ message: "Feedback does not exist!" })
+    res.json({ message: `Feedback with name : ${deleted.name} deleted Successfully` })
+  } catch (err) {
+    console.log(err)
+    return res.status(500).json({ message: "Some Error Occured" })
+  }
+}
+
+module.exports = { newfeed, getFeedbackList, deleteFeedback, newCoursefeed, getCourseFeedbackList, deleteCourseFeedback }

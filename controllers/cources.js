@@ -40,7 +40,8 @@ const getCouses = async (req, res) => {
 
     if (finalLst.length == 0 || !finalLst.length) {
       // console.log("a:", finalLst.length)
-      return res.status(204).json({ message: "No record Found" })
+      // return res.status(204).json({ message: "No record Found" })
+      return res.json([])
     }
 
     if (sem && year) return res.json(finalLst.filter((detail) => detail.sem == sem && detail.year == year))
