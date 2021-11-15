@@ -126,7 +126,7 @@ const getCourseFeedbackList = async (req, res) => {
   // console.log(req.user)
   try {
     const feedbackList = await newCourseFeedbackModal.find().populate("createdBy", ['userName', 'email']).populate("feedbackQuestions", 'name').populate("feedbackOf")
-    let givenFeedbacks = await feedbackAnsModel.find()
+    let givenFeedbacks = await courseFeedbackAnsModel.find()
     givenFeedbacks = givenFeedbacks.map((ans) => ({ fid: ans.feedbackId, uid: ans.userId })).filter((i) => String(i.uid) == String(req.user._id))
     // console.log(givenFeedbacks)
     // console.log(givenFeedbacks.filter((i) => String(i.uid) == String(req.user._id)))

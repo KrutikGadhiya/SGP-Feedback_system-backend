@@ -87,7 +87,7 @@ const getFeedbackAns = async (req, res) => {
     if (!feedAns.length) {
       return res.json([]) //.status(204)
     }
-    // console.log(feedAns)
+    console.log(feedAns)
     let filtered = feedAns.filter((ans) => ans.feedbackId.feedbackOf == id)
     // return res.json(filtered)
     // filtered.forEach(ans => feedAnsList.push(ans.ans))
