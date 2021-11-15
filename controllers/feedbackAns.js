@@ -84,7 +84,9 @@ const getFeedbackAns = async (req, res) => {
     }).populate("userId", ["email", "userName"])
     // console.log(temp)
 
-    if (!feedAns.length) return res.status(204)
+    if (!feedAns.length) {
+      return res.json([]) //.status(204)
+    }
     // console.log(feedAns)
     let filtered = feedAns.filter((ans) => ans.feedbackId.feedbackOf == id)
     // return res.json(filtered)
@@ -171,7 +173,10 @@ const getCourseFeedbackAns = async (req, res) => {
     }).populate("userId", ["email", "userName"])
     // console.log(temp)
 
-    if (!feedAns.length) return res.status(204)
+    if (!feedAns.length) {
+      console.log(feedAns)
+      return res.json([])//.status(204)
+    }
     console.log(feedAns)
     // console.log(typeof feedAns[0].feedbackId.feedbackOf)
     let filtered = feedAns.filter((ans) => String(ans.feedbackId.feedbackOf) == id)

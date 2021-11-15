@@ -19,12 +19,12 @@ const signup = (req, res) => {
           .then(hashedPassword => {
             const newUser = new UserModel({
               userName,
-              email,
+              email: email.toLowerCase(),
               password: hashedPassword,
               role: role.toLowerCase(),
               otp,
-              institute,
-              department,
+              institute: institute.toUpperCase(),
+              department: department.toUpperCase(),
               sem,
               year,
               avatar: `https://avatars.dicebear.com/api/identicon/${userName.replace(' ', '')}.svg`
@@ -55,7 +55,7 @@ const login = (req, res) => {
     return res.status(422).json({ message: "Please add Email or Password" })
   }
 
-  UserModel.findOne({ email: email })
+  UserModel.findOne({ email: email.toLowerCase() })
     .then(savedUser => {
       if (!savedUser) {
         return res.status(404).json({ message: "IT seems like You dont have an account, Sign-Up to continue" })
@@ -70,7 +70,7 @@ const login = (req, res) => {
             const token = jwt.sign({ id: savedUser._id }, process.env.JWT_SECRET, { expiresIn: '48h' })
             const { _id, userName, email, role, isVerified, institute, department, sem, year, avatar } = savedUser
             if (!sem && !year) res.status(200).json({ token, _id, userName, email, role, isVerified, institute, department, avatar })
-            else res.status(200).json({ token, _id, userName, email, role, isVerified, institute, department, sem, year, avatar })
+            else res.status(200).json({ token, _id, userName, email: email.toLowerCase(), role, isVerified, institute, department, sem, year, avatar })
           }
           else {
             return res.status(422).json({ message: "Invalid Email or Password!!" })
@@ -78,12 +78,12 @@ const login = (req, res) => {
         })
         .catch(err => {
           console.log(err)
-          return res.status(500).json({ message: "ASome Error Occured" })
+          return res.status(500).json({ message: "Some Error Occured!" })
         })
     })
     .catch(err => {
       console.log(err)
-      return res.status(500).json({ message: "BSome Error Occured" })
+      return res.status(500).json({ message: "Some Error Occured" })
     })
 }
 
