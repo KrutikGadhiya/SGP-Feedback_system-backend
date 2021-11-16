@@ -153,7 +153,8 @@ const getUser = async (req, res) => {
       department: savedUser.department,
       institute: savedUser.institute,
       sem: savedUser.sem,
-      year: savedUser.year
+      year: savedUser.year,
+      avatar: savedUser.avatar
     })
   } catch (err) {
     console.log(err)
